@@ -1,0 +1,14 @@
+// Prisma schema — The Codex database models
+// TODO: Configure datasource, generator, and models
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// TODO: Define models: User, Document, Chunk, Conversation, Message
+// TODO: Enable pgvector extension for embeddings
