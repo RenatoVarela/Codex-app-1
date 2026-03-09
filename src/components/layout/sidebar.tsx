@@ -6,7 +6,7 @@ import { UserButton } from "@clerk/nextjs";
 
 import { navigationItems } from "@/src/config/navigation";
 import { useUIStore } from "@/src/stores/ui-store";
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/src/lib/utils/cn";
 import { SlideIn } from "@/src/components/motion/slide-in";
 
 export function Sidebar() {
@@ -48,7 +48,7 @@ export function Sidebar() {
         </nav>
 
         <div className="border-t border-border p-4">
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </div>
       </aside>
     </SlideIn>

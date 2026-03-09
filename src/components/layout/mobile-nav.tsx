@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 import { navigationItems } from "@/src/config/navigation";
 import { useUIStore } from "@/src/stores/ui-store";
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/src/lib/utils/cn";
 
 export function MobileNav() {
   const pathname = usePathname();
