@@ -146,6 +146,16 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* --- Animations --- */
+@theme inline {
+  --animate-shimmer: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* --- Base styles --- */
 @layer base {
   * {
