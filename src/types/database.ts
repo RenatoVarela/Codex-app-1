@@ -22,6 +22,7 @@ export type Document = {
   fileUrl: string;
   fileType: FileType;
   summary: string | null;
+  extractedText: string | null;
   totalChunks: number;
   status: DocumentStatus;
   createdAt: Date;

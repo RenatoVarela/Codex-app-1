@@ -30,6 +30,7 @@ model Document {
   fileUrl       String
   fileType      String
   summary       String?
+  extractedText String?
   totalChunks   Int            @default(0)
   status        String         @default("processing")
   createdAt     DateTime       @default(now())
