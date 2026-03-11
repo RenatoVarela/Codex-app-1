@@ -1,4 +1,4 @@
-import type { ParsedDocument } from "@/types/rag";
+import type { ParsedDocument } from "@/src/types/rag";
 
 const MAX_TITLE_LENGTH = 200;
 

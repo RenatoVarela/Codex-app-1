@@ -1,4 +1,4 @@
-import type { ParsedDocument } from "@/types/rag";
+import type { ParsedDocument } from "@/src/types/rag";
 
 const HEADING_REGEX = /^(#{1,6})\s+(.+)$/gm;
 const BOLD_ITALIC_REGEX = /(\*{1,3}|_{1,3})(.+?)\1/g;

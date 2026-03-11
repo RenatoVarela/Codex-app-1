@@ -1,5 +1,5 @@
-import type { FileType } from "@/types/database";
-import type { ParsedDocument } from "@/types/rag";
+import type { FileType } from "@/src/types/database";
+import type { ParsedDocument } from "@/src/types/rag";
 
 import { parseMarkdown } from "./markdown-parser";
 import { parsePdf } from "./pdf-parser";

@@ -1,4 +1,4 @@
-import type { ParsedDocument } from "@/types/rag";
+import type { ParsedDocument } from "@/src/types/rag";
 
 const FETCH_TIMEOUT_MS = 10_000;
 const TITLE_REGEX = /<title[^>]*>([^<]+)<\/title>/i;
