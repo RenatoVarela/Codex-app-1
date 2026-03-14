@@ -87,10 +87,10 @@ Each issue maps to a feature branch: `feat/NNN-descriptive-name`
 
 ## Backend
 
-- [ ] `007-chunking-and-embeddings` — **Status:** `pending`
+- [ ] `007-chunking-and-embeddings` — **Status:** `in_progress`
   Semantic chunking engine (`lib/rag/chunking.ts`): split by paragraphs/sections, 200-500 token target, 10-15% overlap, preserve metadata (page number, section title, heading). Voyage AI embeddings integration (`lib/rag/embeddings.ts`): batch embedding generation (max 128 per call), 1024-dimension vectors. pgvector storage: insert chunks with embeddings. Embeddings API route (`/api/embeddings`) to trigger indexing for a document. Background processing: update document status as chunks are indexed.
 
-- [ ] `008-search-and-retrieval` — **Status:** `pending`
+- [ ] `008-search-and-retrieval` — **Status:** `in_progress`
   Hybrid search (`lib/rag/retrieval.ts`): cosine similarity via pgvector + PostgreSQL full-text search (tsvector/tsquery), weighted combination (0.7 semantic + 0.3 keyword). Voyage reranking (`lib/rag/reranking.ts`): reorder retrieved chunks by relevance. RAG pipeline orchestrator (`lib/rag/pipeline.ts`): query → embed → retrieve → rerank → return top-K chunks. Search API route (`/api/search`).
 
 ---
