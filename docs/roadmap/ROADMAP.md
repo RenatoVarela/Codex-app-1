@@ -101,12 +101,12 @@ Each issue maps to a feature branch: `feat/NNN-descriptive-name`
 
 ## Backend
 
-- [ ] `009-chat-api-and-generation` — **Status:** `pending`
+- [ ] `009-chat-api-and-generation` — **Status:** `claimed`
   Gemini Flash integration via Vercel AI SDK (`lib/clients/gemini.ts`). Prompt construction (`lib/rag/generation.ts`): system prompt with librarian persona, context injection from retrieved chunks, citation formatting instructions. Streaming chat endpoint (`/api/chat`): authenticate → validate → retrieve relevant chunks via RAG pipeline → stream response with `streamText()`. Citation extraction: parse model output for chunk references, store in message as JSONB. Conversation and message persistence: create/update conversations, store messages with role and citations. Auto-summary generation: after document indexing completes, send representative chunks to Gemini to generate a document summary, store in document record.
 
 ## Frontend
 
-- [ ] `010-chat-ui-and-conversations` — **Status:** `pending`
+- [ ] `010-chat-ui-and-conversations` — **Status:** `claimed`
   Chat interface (`/chat` and `/chat/[conversationId]`): full chat layout with message list and input. MessageBubble component (user/assistant variants) with slide-up entrance animation. StreamingText component with typewriter animation. CitationCard component linking to source document/page. ChatInput with submit handling. Conversation sidebar: list of past conversations, create new conversation. Document-scoped chat (from document view page). Document status polling UI: real-time status indicators (processing spinner, ready badge, error state). Summary display on document page. TanStack Query hooks: `useConversations`, `useMessages`. Zustand `chat-store` for draft input and active document selection. Loading, empty, and error states for all chat views.
 
 ---
