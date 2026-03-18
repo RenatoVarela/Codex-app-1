@@ -1,7 +1,7 @@
 import { Sidebar } from "@/src/components/layout/sidebar";
 import { Header } from "@/src/components/layout/header";
 import { MobileNav } from "@/src/components/layout/mobile-nav";
-import { FadeIn } from "@/src/components/motion/fade-in";
+import { PageTransition } from "@/src/components/motion/page-transition";
 
 export default function DashboardLayout({
   children,
@@ -17,7 +17,7 @@ export default function DashboardLayout({
         <Header />
 
         <main className="flex-1 overflow-y-auto p-4 md:p-8">
-          <FadeIn>{children}</FadeIn>
+          <PageTransition>{children}</PageTransition>
         </main>
       </div>
     </div>
