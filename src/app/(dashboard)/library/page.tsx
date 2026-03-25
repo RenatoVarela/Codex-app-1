@@ -6,6 +6,7 @@ import { BookShelf } from "@/src/components/library/book-shelf";
 import { BookShelfSkeleton } from "@/src/components/library/book-card-skeleton";
 import { EmptyLibrary } from "@/src/components/library/empty-library";
 import { UploadZone } from "@/src/components/library/upload-zone";
+import { Parallax } from "@/src/components/motion/parallax";
 import { useDocuments } from "@/src/hooks/queries/use-documents";
 import { useUpload } from "@/src/hooks/use-upload";
 import { cn } from "@/src/lib/utils/cn";
@@ -16,16 +17,18 @@ export default function LibraryPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-baseline justify-between">
-        <h1 className="font-heading text-3xl font-bold text-foreground">
-          My Library
-        </h1>
-        {documents.length > 0 && (
-          <span className="font-ui text-sm text-muted-foreground">
-            {documents.length} {documents.length === 1 ? "tome" : "tomes"}
-          </span>
-        )}
-      </div>
+      <Parallax speed={0.3}>
+        <div className="flex items-baseline justify-between">
+          <h1 className="font-heading text-3xl font-bold text-foreground">
+            My Library
+          </h1>
+          {documents.length > 0 && (
+            <span className="font-ui text-sm text-muted-foreground">
+              {documents.length} {documents.length === 1 ? "tome" : "tomes"}
+            </span>
+          )}
+        </div>
+      </Parallax>
 
       <UploadZone
         onUpload={uploadFile}
