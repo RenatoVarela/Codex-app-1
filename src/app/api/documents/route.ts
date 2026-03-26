@@ -1,22 +1,21 @@
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
 
 import { prisma } from "@/src/lib/clients/prisma";
 import { getOrCreateUser } from "@/src/lib/auth/get-or-create-user";
-import { extractText } from "@/src/lib/parsers";
 import { uploadFileSchema, uploadUrlSchema, MAX_FILE_SIZE } from "@/src/lib/validations/upload";
-import { chunkText } from "@/src/lib/rag/chunking";
-import {
-  generateChunkEmbeddings,
-  storeChunksWithEmbeddings,
-  updateSearchVectors,
-} from "@/src/lib/rag/embeddings";
 
 import type { NextRequest } from "next/server";
 import type { FileType } from "@/src/types/database";
 
 async function indexDocument(documentId: string, extractedText: string): Promise<void> {
   try {
+    const { chunkText } = await import("@/src/lib/rag/chunking");
+    const {
+      generateChunkEmbeddings,
+      storeChunksWithEmbeddings,
+      updateSearchVectors,
+    } = await import("@/src/lib/rag/embeddings");
+
     const chunks = chunkText(extractedText);
     if (chunks.length === 0) return;
 
@@ -58,6 +57,9 @@ export async function POST(request: NextRequest) {
 }
 
 async function handleFileUpload(request: NextRequest, userId: string) {
+  const { put } = await import("@vercel/blob");
+  const { extractText } = await import("@/src/lib/parsers");
+
   const formData = await request.formData();
   const file = formData.get("file");
   const titleField = formData.get("title");
@@ -142,6 +144,8 @@ async function handleFileUpload(request: NextRequest, userId: string) {
 }
 
 async function handleUrlUpload(request: NextRequest, userId: string) {
+  const { extractText } = await import("@/src/lib/parsers");
+
   const body: unknown = await request.json();
   const validation = uploadUrlSchema.safeParse(body);
 
