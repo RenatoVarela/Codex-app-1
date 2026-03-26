@@ -18,8 +18,8 @@ export async function parsePdf(buffer: Buffer): Promise<ParsedDocument> {
     const page = await doc.getPage(i);
     const textContent = await page.getTextContent();
     const pageText = textContent.items
-      .filter((item): item is { str: string } => "str" in item)
-      .map((item) => item.str)
+      .filter((item) => "str" in item)
+      .map((item) => (item as { str: string }).str)
       .join(" ");
     pageTexts.push(pageText);
   }
