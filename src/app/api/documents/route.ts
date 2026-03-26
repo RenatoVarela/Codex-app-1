@@ -201,37 +201,45 @@ async function handleUrlUpload(request: NextRequest, userId: string) {
 }
 
 export async function GET(request: NextRequest) {
-  const authResult = await getOrCreateUser();
+  try {
+    const authResult = await getOrCreateUser();
 
-  if (authResult.error) {
-    const status = authResult.error === "unauthorized" ? 401 : 500;
-    return NextResponse.json({ error: authResult.error }, { status });
+    if (authResult.error) {
+      const status = authResult.error === "unauthorized" ? 401 : 500;
+      return NextResponse.json({ error: authResult.error }, { status });
+    }
+
+    const user = authResult.user;
+
+    const { searchParams } = new URL(request.url);
+    const page = Math.max(1, Number(searchParams.get("page")) || 1);
+    const pageSize = Math.min(100, Math.max(1, Number(searchParams.get("pageSize")) || 20));
+    const status = searchParams.get("status");
+
+    const where = {
+      userId: user.id,
+      ...(status ? { status } : {}),
+    };
+
+    const [documents, total] = await Promise.all([
+      prisma.document.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.document.count({ where }),
+    ]);
+
+    return NextResponse.json({
+      data: documents,
+      pagination: { total, page, pageSize },
+    });
+  } catch (error) {
+    console.error("[API] GET /api/documents:", error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Internal server error" },
+      { status: 500 }
+    );
   }
-
-  const user = authResult.user;
-
-  const { searchParams } = new URL(request.url);
-  const page = Math.max(1, Number(searchParams.get("page")) || 1);
-  const pageSize = Math.min(100, Math.max(1, Number(searchParams.get("pageSize")) || 20));
-  const status = searchParams.get("status");
-
-  const where = {
-    userId: user.id,
-    ...(status ? { status } : {}),
-  };
-
-  const [documents, total] = await Promise.all([
-    prisma.document.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    }),
-    prisma.document.count({ where }),
-  ]);
-
-  return NextResponse.json({
-    data: documents,
-    pagination: { total, page, pageSize },
-  });
 }
