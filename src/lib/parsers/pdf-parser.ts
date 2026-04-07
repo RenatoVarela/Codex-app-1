@@ -1,14 +1,19 @@
-import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
-
 import type { ParsedDocument } from "@/src/types/rag";
-
-// Disable worker — we run server-side only
-pdfjs.GlobalWorkerOptions.workerSrc = "";
 
 const EXCESSIVE_WHITESPACE_REGEX = /[ \t]{2,}/g;
 const EXCESSIVE_NEWLINES_REGEX = /\n{3,}/g;
 
 export async function parsePdf(buffer: Buffer): Promise<ParsedDocument> {
+  // pdfjs-dist 5.x references DOMMatrix at module load time, which doesn't exist
+  // in older Node.js runtimes (e.g. Vercel serverless). Polyfill before importing.
+  if (typeof globalThis.DOMMatrix === "undefined") {
+    // @ts-expect-error — minimal no-op polyfill; we don't use matrix transforms
+    globalThis.DOMMatrix = class DOMMatrix {};
+  }
+
+  const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+  pdfjs.GlobalWorkerOptions.workerSrc = "";
+
   const data = new Uint8Array(buffer);
   const doc = await pdfjs.getDocument({ data, useWorkerFetch: false, isEvalSupported: false, useSystemFonts: true }).promise;
 
